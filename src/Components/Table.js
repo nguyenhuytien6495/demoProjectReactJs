@@ -1,50 +1,57 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import Demo from "../Pages/Demo";
 
-export default function Table({ list }) {
+export default function Table({ list, setDelStatus }) {
+  const navigate = useNavigate();
+
   console.log(list);
-  //   const data = list.map((item) => {
-  //     return (
-  //       <>
-  //         <tr key={item.id}>
-  //           <th>{item.id}</th>
-  //           <th>{item.name}</th>
-  //         </tr>
-  //       </>
-  //     );
-  //   });
+  const handleDelete = (id) => {
+    const data = JSON.parse(localStorage.getItem("data"));
+    let index = data.findIndex((item) => item.id === id);
+    data.splice(index, 1);
+    localStorage.setItem("data", JSON.stringify(data));
+    setDelStatus(index);
+  };
   return (
     <div>
       <table className="table table-dark">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          {/* {data} */}
-          {/* <tr>
-            <th scope="row"></th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr> */}
+          {list.map((item) => {
+            return (
+              <tr key={item.id}>
+                <th scope="row">{item.id}</th>
+                <td>{item.name}</td>
+                <td>
+                  <button
+                    type="button"
+                    className="btn btn-warning"
+                    onClick={() => handleDelete(item.id)}
+                  >
+                    Delete
+                  </button>
+                  <span> </span>
+                  <button
+                    type="button"
+                    className="btn btn-info"
+                    onClick={() => navigate(`add/${item.id}`)}
+                  >
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
+      <Demo />
     </div>
   );
 }

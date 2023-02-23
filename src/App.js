@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
+import FormAdd from "./Pages/FormAdd";
 import Home from "./Pages/Home";
 import NotFound from "./Pages/NotFound";
 
@@ -10,8 +11,9 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/about" element={<About />}></Route>
-        <Route path="/contact" element={<Contact />}></Route>
+        <Route path="about" element={<About />}></Route>
+        <Route path="contact" element={<Contact />}></Route>
+        <Route path="add/:id?" element={<FormAdd />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </div>
